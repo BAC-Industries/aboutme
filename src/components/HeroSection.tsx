@@ -8,8 +8,8 @@ export function HeroSection() {
   return (
     <section 
       className="w-full py-24 md:py-32 lg:py-40 bg-cover bg-center bg-fixed" 
-      style={{ backgroundImage: "url('https://placehold.co/1920x1080.png')" }}
-      data-ai-hint="abstract background"
+      style={{ backgroundImage: "url('https://storage.googleapis.com/aif-us-build-prod-v1-data/public/projects/232439580169/instances/1721245084930_14535_B/image.jpeg')" }}
+      data-ai-hint="abstract network"
     >
       <div className="container px-4 md:px-6 grid md:grid-cols-2 gap-12 items-center">
         <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-6 bg-background/80 backdrop-blur-sm p-8 rounded-lg">

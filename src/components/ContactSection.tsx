@@ -46,8 +46,8 @@ export default function ContactSection() {
     <section 
       id="contact" 
       className="py-20 md:py-32 bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: "url('https://placehold.co/1920x1080.png')" }}
-      data-ai-hint="geometric pattern"
+      style={{ backgroundImage: "url('https://storage.googleapis.com/aif-us-build-prod-v1-data/public/projects/232439580169/instances/1721245084930_14535_B/image.jpeg')" }}
+      data-ai-hint="abstract network"
     >
       <div className="container mx-auto">
         <div className="max-w-2xl mx-auto">
