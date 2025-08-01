@@ -21,12 +21,6 @@ const certifications = [
     icon: Award,
   },
   {
-    title: 'Hackathon Certifications & Awards',
-    issuer: 'Cambridge Judge Business School, Web3 Hackathons',
-    description: 'Participated and led teams in multiple hackathons building AI, blockchain, and autonomous systems MVPs under time constraints.',
-    icon: Trophy,
-  },
-  {
     title: 'Drone & Robotics AI Systems (Self-Directed Research)',
     issuer: 'Ongoing Research Paper',
     description: 'Exploring the use of machine learning and AI agents in autonomous intelligent systems, drones, and robotics.',
