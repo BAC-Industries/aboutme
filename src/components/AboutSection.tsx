@@ -70,7 +70,7 @@ const toolsAndPlatforms = [
 ];
 
 const softSkills = [
-  { title: 'Leadership', description: 'President of The Engineer\'s Guild at Anglia Ruskin University (Cambridge Campus), pursuing a 2nd year Bachelor\'s in Computer Science.' },
+  { title: 'Leadership', description: 'Proven ability to lead teams and projects, demonstrated through university and extracurricular activities.' },
   { title: 'Teamwork & Collaboration', description: 'Working with developers, law students, and engineers in diverse projects' },
   { title: 'Communication', description: 'Translating technical concepts to non-technical stakeholders' },
   { title: 'Problem-Solving', description: 'Delivering solutions under tight deadlines and adapting to new technologies' },

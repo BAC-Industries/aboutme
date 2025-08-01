@@ -4,6 +4,7 @@ import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import CertificationsSection from '@/components/CertificationsSection';
+import VolunteerSection from '@/components/VolunteerSection';
 import NewsSection from '@/components/NewsSection';
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <CertificationsSection />
+        <VolunteerSection />
         <NewsSection />
         <ContactSection />
       </main>
