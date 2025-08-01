@@ -8,11 +8,24 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from '@/components/ui/textarea';
 import { useAuth } from '@/hooks/use-auth';
 import { generateTailoredAboutMe } from '@/app/actions';
-import { Loader2 } from 'lucide-react';
+import { Loader2, PlusCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from '@/components/ui/badge';
 
 
 const originalAboutMe = "I'm Siddharth Bejadi, an aspiring AI engineer and full-stack developer passionate about creating scalable, production-ready intelligent systems that bridge technology and real-world impact. My focus is on AI agents, autonomous systems, and machine learning solutions optimized for performance and deployment.";
+
+// Mock data - in a real app, this would come from a database
+const initialSkills = [
+  { category: 'Programming Languages', skills: ['Python', 'Rust', 'C', 'C++', 'Java', 'JavaScript'] },
+  { category: 'Web Development', skills: ['HTML', 'CSS', 'Django', 'Node.js', 'React'] },
+];
+const initialCerts = [
+    { title: "CS50's Introduction to Artificial Intelligence with Python", issuer: 'Harvard University', description: 'Covered search algorithms...' },
+    { title: 'Demystifying Networking', issuer: 'IIT Bombay', description: 'Deepened understanding of network protocols...' },
+];
+
 
 function AdminDashboard() {
   const { signOutUser } = useAuth();
@@ -21,6 +34,9 @@ function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  // State for skills and certs
+  const [skills, setSkills] = useState(initialSkills);
+  const [certifications, setCertifications] = useState(initialCerts);
 
   const handleTailorBio = async () => {
     if (!jobRole) {
@@ -56,23 +72,22 @@ function AdminDashboard() {
   };
   
   const handleSaveChanges = () => {
-    // Here you would typically save the 'aboutMe' content to your database.
-    // For now, we'll just show a success message.
-    console.log("Saving changes:", aboutMe);
+    // This would save all changes (aboutMe, skills, certs) to a database
+    console.log("Saving changes:", { aboutMe, skills, certifications });
     toast({
       title: 'Changes Saved!',
-      description: 'Your "About Me" section has been updated locally.',
+      description: 'Your portfolio content has been updated locally.',
     });
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 md:p-8">
-      <Card className="w-full max-w-3xl">
+      <Card className="w-full max-w-4xl">
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
               <CardTitle className="text-2xl font-bold">Admin Dashboard</CardTitle>
-              <CardDescription>Edit your portfolio content here.</CardDescription>
+              <CardDescription>Edit your portfolio content here. Click "Save Changes" at the bottom to apply.</CardDescription>
             </div>
             <Button onClick={signOutUser} variant="outline" className="mt-4 md:mt-0">
               Sign Out
@@ -80,47 +95,92 @@ function AdminDashboard() {
           </div>
         </CardHeader>
         <CardContent className="space-y-8">
-          {/* About Me Section Editor */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold">About Me Section</h3>
-            <div className="space-y-2">
-              <Label htmlFor="about-me">Main Bio</Label>
-              <Textarea
-                id="about-me"
-                value={aboutMe}
-                onChange={(e) => setAboutMe(e.target.value)}
-                rows={6}
-                className="text-base"
-              />
-            </div>
-            <div className="p-4 border rounded-lg bg-secondary/50 space-y-3">
-               <h4 className="font-semibold text-sm">✨ AI-Powered Tailoring</h4>
-               <p className="text-sm text-muted-foreground">
-                 Enter a job role below (e.g., "AI Research Scientist") and the AI will rewrite your bio to highlight the most relevant skills.
-               </p>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <Input
-                  id="job-role"
-                  placeholder="Enter job role..."
-                  value={jobRole}
-                  onChange={(e) => setJobRole(e.target.value)}
-                />
-                <Button onClick={handleTailorBio} disabled={isLoading} className="sm:w-auto w-full">
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Tailoring...
-                    </>
-                  ) : (
-                    'Tailor with AI'
-                  )}
-                </Button>
+          <Tabs defaultValue="about">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="about">About Me</TabsTrigger>
+              <TabsTrigger value="skills">Skills</TabsTrigger>
+              <TabsTrigger value="certs">Certifications</TabsTrigger>
+            </TabsList>
+            <TabsContent value="about" className="pt-6">
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold">About Me Section</h3>
+                <div className="space-y-2">
+                  <Label htmlFor="about-me">Main Bio</Label>
+                  <Textarea
+                    id="about-me"
+                    value={aboutMe}
+                    onChange={(e) => setAboutMe(e.target.value)}
+                    rows={6}
+                    className="text-base"
+                  />
+                </div>
+                <div className="p-4 border rounded-lg bg-secondary/50 space-y-3">
+                   <h4 className="font-semibold text-sm">✨ AI-Powered Tailoring</h4>
+                   <p className="text-sm text-muted-foreground">
+                     Enter a job role below (e.g., "AI Research Scientist") and the AI will rewrite your bio to highlight the most relevant skills.
+                   </p>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Input
+                      id="job-role"
+                      placeholder="Enter job role..."
+                      value={jobRole}
+                      onChange={(e) => setJobRole(e.target.value)}
+                    />
+                    <Button onClick={handleTailorBio} disabled={isLoading} className="sm:w-auto w-full">
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Tailoring...
+                        </>
+                      ) : (
+                        'Tailor with AI'
+                      )}
+                    </Button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </TabsContent>
+            <TabsContent value="skills" className="pt-6">
+               <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-xl font-semibold">Skills Portfolio</h3>
+                  <Button variant="outline"><PlusCircle className="mr-2"/> Add Skill Category</Button>
+                </div>
+                 {skills.map((cat, index) => (
+                    <Card key={index}>
+                        <CardHeader>
+                            <CardTitle className="text-lg">{cat.category}</CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-wrap gap-2">
+                            {cat.skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
+                        </CardContent>
+                    </Card>
+                 ))}
+               </div>
+            </TabsContent>
+            <TabsContent value="certs" className="pt-6">
+               <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                    <h3 className="text-xl font-semibold">Courses & Certifications</h3>
+                    <Button variant="outline"><PlusCircle className="mr-2" /> Add Certification</Button>
+                </div>
+                {certifications.map((cert, index) => (
+                    <Card key={index}>
+                        <CardHeader>
+                            <CardTitle className="text-lg">{cert.title}</CardTitle>
+                            <CardDescription>{cert.issuer}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-sm text-muted-foreground">{cert.description}</p>
+                        </CardContent>
+                    </Card>
+                ))}
+               </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
         <CardFooter>
-            <Button onClick={handleSaveChanges} className="w-full md:w-auto">Save Changes</Button>
+            <Button onClick={handleSaveChanges} className="w-full md:w-auto ml-auto">Save All Changes</Button>
         </CardFooter>
       </Card>
     </div>
@@ -194,7 +254,6 @@ function AdminPage() {
   );
 }
 
-// We don't need to wrap the AdminPage in AuthGuard if the component itself handles both logged-in and logged-out states.
 export default function AdminArea() {
   return <AdminPage />;
 }
