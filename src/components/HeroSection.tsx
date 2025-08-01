@@ -8,7 +8,7 @@ export function HeroSection() {
   return (
     <section 
       className="w-full py-24 md:py-32 lg:py-40 bg-cover bg-center bg-fixed" 
-      style={{ backgroundImage: "url('/background.png')" }}
+      style={{ backgroundImage: "url('https://placehold.co/1920x1080.png')" }}
       data-ai-hint="abstract network"
     >
       <div className="container px-4 md:px-6 grid md:grid-cols-2 gap-12 items-center">
