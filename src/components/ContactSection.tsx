@@ -43,10 +43,15 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="bg-secondary/50 py-20 md:py-32">
+    <section 
+      id="contact" 
+      className="py-20 md:py-32 bg-cover bg-center bg-fixed"
+      style={{ backgroundImage: "url('https://placehold.co/1920x1080.png')" }}
+      data-ai-hint="geometric pattern"
+    >
       <div className="container mx-auto">
         <div className="max-w-2xl mx-auto">
-          <Card>
+          <Card className="bg-card/90 backdrop-blur-sm">
             <CardHeader className="text-center">
               <CardTitle className="text-3xl md:text-4xl font-bold font-headline">Get In Touch</CardTitle>
               <CardDescription className="text-lg mt-2">
