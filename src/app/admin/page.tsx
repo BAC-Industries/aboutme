@@ -20,7 +20,14 @@ function AdminPage() {
     try {
       await signIn(email, password);
     } catch (err: any) {
-      setError(err.message);
+      // Firebase often returns errors with a 'code' property.
+      // We can provide more user-friendly messages.
+      if (err.code === 'auth/invalid-credential') {
+        setError('Invalid email or password. Please try again.');
+      } else {
+        setError('An unexpected error occurred. Please try again later.');
+      }
+      console.error(err);
     }
   };
 
@@ -33,6 +40,7 @@ function AdminPage() {
             <CardDescription>You are successfully logged in.</CardDescription>
           </CardHeader>
           <CardContent>
+            <p className="mb-6 text-muted-foreground">This is your dashboard. Soon you'll be able to edit your portfolio content from here.</p>
             <Button onClick={signOutUser} className="w-full">
               Sign Out
             </Button>
@@ -72,7 +80,7 @@ function AdminPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            {error && <p className="text-sm text-destructive">{error}</p>}
+            {error && <p className="text-sm text-destructive text-center">{error}</p>}
             <Button type="submit" className="w-full">
               Login
             </Button>
@@ -83,10 +91,7 @@ function AdminPage() {
   );
 }
 
-export default function ProtectedAdminPage() {
-  return (
-    <AuthGuard>
-      <AdminPage />
-    </AuthGuard>
-  )
+// We don't need to wrap the AdminPage in AuthGuard if the component itself handles both logged-in and logged-out states.
+export default function AdminArea() {
+  return <AdminPage />;
 }

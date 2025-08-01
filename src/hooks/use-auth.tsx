@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth';
 import firebase_app from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const auth = getAuth(firebase_app);
 
@@ -40,12 +41,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signOutUser = async () => {
     await signOut(auth);
-    router.push('/admin');
+    // No need to push, the onAuthStateChanged will handle the UI update
   };
 
+  const value = { user, loading, signIn, signOutUser };
+
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOutUser }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {loading ? (
+        <div className="flex items-center justify-center min-h-screen">
+            <Skeleton className="w-full h-full" />
+        </div>
+      ) : children}
     </AuthContext.Provider>
   );
 };

@@ -11,12 +11,15 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!loading && !user) {
-      // You can redirect to a login page or show an unauthorized message
-      router.push('/admin'); // Redirect to login if not authenticated
+      // Redirect to a login page if not authenticated and not loading.
+      // The /admin page itself has the login form, so we can redirect there.
+      router.push('/admin'); 
     }
   }, [user, loading, router]);
 
-  if (loading) {
+  if (loading || !user) {
+    // Show a loading skeleton while checking auth state or if there's no user.
+    // This prevents a flash of the protected content.
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Skeleton className="w-full max-w-md h-96" />
