@@ -10,10 +10,10 @@ export default function HeroSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6 text-center md:text-left">
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-            Crafting Digital Experiences
+            Building Intelligent Systems for the Future
           </h1>
           <p className="text-lg text-muted-foreground">
-            I'm Jane Doe, a passionate full-stack developer and UI/UX enthusiast dedicated to building beautiful, functional, and user-centered web applications.
+            I'm Siddharth Bejadi, an aspiring AI engineer and full-stack developer passionate about creating scalable, production-ready intelligent systems that bridge technology and real-world impact. My focus is on AI agents, autonomous systems, and machine learning solutions optimized for performance and deployment.
           </p>
           <div className="flex justify-center md:justify-start gap-4">
             <Button asChild size="lg">
@@ -22,7 +22,7 @@ export default function HeroSection() {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <a href="/resume.pdf" download="JaneDoe_Resume.pdf">
+              <a href="/resume.pdf" download="SiddharthBejadi_Resume.pdf">
                 <Download className="mr-2 h-5 w-5" />
                 Download Resume
               </a>
@@ -31,8 +31,8 @@ export default function HeroSection() {
         </div>
         <div className="flex justify-center">
           <Avatar className="h-64 w-64 md:h-80 md:w-80 border-4 border-primary/50 shadow-lg">
-            <AvatarImage src="https://placehold.co/400x400.png" alt="Jane Doe" data-ai-hint="professional portrait" />
-            <AvatarFallback>JD</AvatarFallback>
+            <AvatarImage src="https://placehold.co/400x400.png" alt="Siddharth Bejadi" data-ai-hint="professional portrait" />
+            <AvatarFallback>SB</AvatarFallback>
           </Avatar>
         </div>
       </div>
