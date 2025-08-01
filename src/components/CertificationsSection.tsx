@@ -33,7 +33,7 @@ export default function CertificationsSection() {
     <section 
       id="certifications" 
       className="py-20 md:py-32 bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: "url('https://placehold.co/1920x1080.png')" }}
+      style={{ backgroundImage: "url('/background.png')" }}
       data-ai-hint="abstract network"
     >
       <div className="container mx-auto">
