@@ -1,150 +1,179 @@
-"use client";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  Brain,
+  Cloud,
+  Code,
+  Cpu,
+  Database,
+  Globe,
+  Network,
+  Rocket,
+  ShieldCheck,
+  Smartphone,
+  Users,
+} from 'lucide-react';
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BrainCircuit, Code, Palette, Server, Sparkles } from 'lucide-react';
-import { useToast } from "@/hooks/use-toast";
-import { generateTailoredAboutMe } from '@/app/actions';
-import { Skeleton } from './ui/skeleton';
+const technicalSkills = [
+  {
+    category: 'Programming Languages',
+    skills: ['Python', 'Rust', 'C', 'C++', 'Java', 'JavaScript'],
+  },
+  {
+    category: 'Web Development',
+    skills: ['HTML', 'CSS', 'Django', 'Node.js', 'React'],
+  },
+  {
+    category: 'AI & Machine Learning',
+    skills: ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras', 'NumPy', 'Pandas', 'OpenCV'],
+  },
+  {
+    category: 'Data Science & Analysis',
+    skills: ['Data preprocessing', 'Feature engineering', 'Model evaluation', 'Visualization (Matplotlib, Seaborn)'],
+  },
+  {
+    category: 'Cloud & Deployment',
+    skills: ['Google Cloud Platform (AI/ML services)', 'Docker', 'Kubernetes', 'CI/CD pipelines'],
+  },
+  {
+    category: 'Networking & Security',
+    skills: ['Network routing', 'Protocols', 'Cybersecurity fundamentals', 'Firewalls', 'VPNs'],
+  },
+  {
+    category: 'Databases',
+    skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'Firebase'],
+  },
+  {
+    category: 'Operating Systems',
+    skills: ['Linux (Ubuntu, Debian)', 'Windows Server', 'macOS'],
+  },
+  {
+    category: 'Robotics & Autonomous Systems',
+    skills: ['Drone programming', 'AI agents', 'Sensor integration', 'Path planning algorithms'],
+  },
+  {
+    category: 'Mathematics for AI',
+    skills: ['Linear Algebra', 'Probability', 'Statistics', 'Calculus', 'Optimization methods'],
+  },
+];
 
-const formSchema = z.object({
-  jobRole: z.string().min(2, {
-    message: "Job role must be at least 2 characters.",
-  }),
-});
+const toolsAndPlatforms = [
+  'Git/GitHub',
+  'Jupyter Notebook',
+  'VS Code',
+  'Notion',
+  'Figma',
+  'Google Cloud AI services',
+  'API integration',
+  'REST & GraphQL',
+  'Containerization and deployment using Docker and Kubernetes',
+];
 
-const initialAboutMe = "I am a versatile full-stack developer with a keen eye for design and a passion for creating intuitive, dynamic user experiences. With a strong foundation in both front-end and back-end technologies, I enjoy bringing ideas to life from concept to deployment. I thrive in collaborative environments and am always eager to learn and adapt to new challenges and technologies to deliver high-quality, scalable solutions.";
+const softSkills = [
+  { title: 'Leadership', description: 'President of Engineer’s Guild, leading cross-disciplinary teams' },
+  { title: 'Teamwork & Collaboration', description: 'Working with developers, law students, and engineers in diverse projects' },
+  { title: 'Communication', description: 'Translating technical concepts to non-technical stakeholders' },
+  { title: 'Problem-Solving', description: 'Delivering solutions under tight deadlines and adapting to new technologies' },
+  { title: 'Adaptability', description: 'Rapidly learning new domains (e.g., legal AI, healthcare AI, Web3)' },
+  { title: 'Project Management', description: 'Planning workshops, milestone setting, coordinating teams' },
+  { title: 'Time Management', description: 'Balancing coursework, hackathons, and research projects' },
+  { title: 'Strategic Thinking', description: 'Chess and sports contributing to long-term planning and focus' },
+];
 
-const skills = [
-  { icon: Code, title: 'Frontend', description: 'React, Next.js, Tailwind CSS, TypeScript' },
-  { icon: Server, title: 'Backend', description: 'Node.js, Express, Firebase, PostgreSQL' },
-  { icon: Palette, title: 'Design', description: 'Figma, UI/UX Principles, Prototyping' },
+const additionalCompetencies = [
+  'Hackathon Experience: Building MVPs under time constraints and pressure',
+  'Research & Writing: Drafting academic papers on AI agents and autonomous systems',
+  'Testing & Optimization: Creating scalable, production-ready AI models',
+  'Cross-Domain AI Applications: Implementing AI in law, healthcare, drones, and Web3',
 ];
 
 export default function AboutSection() {
-  const [aboutMeText, setAboutMeText] = useState(initialAboutMe);
-  const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      jobRole: "",
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    try {
-      const result = await generateTailoredAboutMe({
-        aboutMe: aboutMeText,
-        jobRole: values.jobRole,
-      });
-
-      if (result.success && result.tailoredAboutMe) {
-        setAboutMeText(result.tailoredAboutMe);
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: result.error || "Failed to tailor 'About Me' section.",
-        });
-      }
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "An unexpected error occurred.",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   return (
-    <section id="about" className="container mx-auto py-20 md:py-32">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold font-headline">About Me</h2>
-        <p className="text-lg text-muted-foreground mt-2">My journey, skills, and what I can bring to your team.</p>
+    <section id="skills" className="container mx-auto py-20 md:py-32">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold font-headline">Skills Portfolio</h2>
+        <p className="text-xl text-muted-foreground mt-3">A detailed overview of my technical and professional capabilities.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-        <div className="lg:col-span-3 space-y-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BrainCircuit className="h-6 w-6 text-accent" />
-                Tailor My Bio with AI
-              </CardTitle>
-              <CardDescription>
-                Enter a job role below to see how AI can customize my bio for a specific position.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <div className="space-y-4">
-                  <Skeleton className="h-32 w-full" />
-                  <Skeleton className="h-10 w-1/2" />
-                </div>
-              ) : (
-                <Textarea
-                  value={aboutMeText}
-                  onChange={(e) => setAboutMeText(e.target.value)}
-                  rows={8}
-                  className="mb-4"
-                  placeholder="My 'About Me' text..."
-                />
-              )}
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="jobRole"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Job Role</FormLabel>
-                        <FormControl>
-                          <Input placeholder="e.g., 'Frontend Developer'" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" disabled={isLoading}>
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    {isLoading ? 'Tailoring...' : 'Tailor with AI'}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
+      <div className="space-y-16">
+        {/* Technical Skills */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-1">
+            <h3 className="text-2xl font-bold font-headline mb-4">Technical Skills</h3>
+            <p className="text-muted-foreground">A deep dive into the technologies I work with.</p>
+          </div>
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+            {technicalSkills.map((section) => (
+              <Card key={section.category}>
+                <CardHeader>
+                  <CardTitle className="text-lg">{section.category}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                  {section.skills.map((skill) => (
+                    <Badge key={skill} variant="secondary">{skill}</Badge>
+                  ))}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-        <div className="lg:col-span-2 space-y-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>My Skillset</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {skills.map((skill) => (
-                <div key={skill.title} className="flex items-start gap-4">
+
+        {/* Tools & Platforms */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+           <div className="lg:col-span-1">
+            <h3 className="text-2xl font-bold font-headline mb-4">Tools & Platforms</h3>
+             <p className="text-muted-foreground">The ecosystem of tools I use to build, test, and deploy.</p>
+          </div>
+          <div className="lg:col-span-2">
+            <Card>
+              <CardContent className="p-6 flex flex-wrap gap-3">
+                {toolsAndPlatforms.map((tool) => (
+                  <Badge key={tool} variant="outline" className="text-base px-3 py-1">{tool}</Badge>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+        
+        {/* Soft Skills */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+           <div className="lg:col-span-1">
+            <h3 className="text-2xl font-bold font-headline mb-4">Soft & Transferable Skills</h3>
+             <p className="text-muted-foreground">The essential skills that drive successful projects and collaborations.</p>
+          </div>
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {softSkills.map((skill) => (
+               <div key={skill.title} className="flex items-start gap-4 p-4 rounded-lg border bg-card">
                   <div className="bg-primary/20 text-accent p-3 rounded-full">
-                    <skill.icon className="h-6 w-6" />
+                     <Users className="h-6 w-6" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg">{skill.title}</h4>
-                    <p className="text-muted-foreground">{skill.description}</p>
+                    <p className="text-sm text-muted-foreground">{skill.description}</p>
                   </div>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
+            ))}
+          </div>
+        </div>
+        
+        {/* Additional Competencies */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+           <div className="lg:col-span-1">
+            <h3 className="text-2xl font-bold font-headline mb-4">Additional Competencies</h3>
+             <p className="text-muted-foreground">Unique experiences that enhance my profile.</p>
+          </div>
+          <div className="lg:col-span-2">
+            <Card>
+              <CardContent className="p-6 space-y-4">
+                {additionalCompetencies.map((comp) => (
+                  <div key={comp} className="flex items-center gap-3">
+                     <Rocket className="h-5 w-5 text-accent" />
+                     <p className="text-muted-foreground">{comp}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </section>
