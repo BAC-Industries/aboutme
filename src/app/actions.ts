@@ -30,7 +30,7 @@ export async function submitContactForm(data: { name: string; email: string; mes
     // 2️⃣ Send email notification via Resend
     await resend.emails.send({
       from: 'Portfolio <onboarding@resend.dev>', // This must be a verified domain on Resend
-      to: ['your-email@example.com'], // Replace with your email
+      to: ['siddharth200517@gmail.com'], // Replace with your email
       subject: `New Contact Message from ${data.name}`,
       html: `
         <h2>New Contact Form Submission</h2>
