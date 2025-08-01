@@ -31,7 +31,7 @@ export default function HeroSection() {
         </div>
         <div className="flex justify-center">
           <Avatar className="h-64 w-64 md:h-80 md:w-80 border-4 border-primary/50 shadow-lg">
-            <AvatarImage src="https://placehold.co/400x400.png" alt="Siddharth Bejadi" data-ai-hint="professional portrait" />
+            <AvatarImage src="/profile.jpeg" alt="Siddharth Bejadi" />
             <AvatarFallback>SB</AvatarFallback>
           </Avatar>
         </div>
